@@ -1,0 +1,11 @@
+---
+- name: "Directory to Write YAML Files"
+  file:
+    state: directory
+    path: "{{ item }}"
+  loop:
+    - "/tmp/apis"
+    - "/tmp/apis/qa"
+    - "/tmp/apis/qa/deployment"
+    - "/tmp/apis/qa/service"
+    - "/tmp/apis/qa/hpa"

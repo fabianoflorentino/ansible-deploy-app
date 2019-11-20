@@ -1,0 +1,11 @@
+---
+api_name: "product-catalog"
+api_port: 8005
+nodeport: 30805
+version: 8
+r_cpu: "128m"
+r_memory: "64M"
+l_cpu: "1024m"
+l_memory: "1Gi"
+max_replicas: 2
+min_replicas: 1

@@ -1,0 +1,11 @@
+---
+api_name: "price-jabuti"
+api_port: 8022
+nodeport: 30822
+version: 11
+r_cpu: "128m"
+r_memory: "64M"
+l_cpu: "1024m"
+l_memory: "1Gi"
+max_replicas: 2
+min_replicas: 1

@@ -1,0 +1,6 @@
+---
+
+- name: "Deploy API's on Kubernetes"
+  hosts: localhost
+  roles:
+    - {role: apis_apply, tags: "apis_apply"}

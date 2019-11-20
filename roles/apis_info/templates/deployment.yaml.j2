@@ -1,0 +1,91 @@
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: {{ api_name }}
+  namespace: qa
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: {{ api_name }}
+    spec:
+      containers:
+      - name: promotional-ranking
+{% if api_name == "sale-ticket" %}
+        image: dolphinnexus.br.wcorp.carrefour.com:8083/qa-{{ api_name }}-v2:0.0.1-{{ version }}
+{% elif api_name == "promotional-ranking" 
+  or api_name == "site-complement" 
+  or api_name == "stock-online" 
+  or api_name == "fiscal-xml-consult" 
+  or api_name == "sale-assortment" 
+  or api_name == "sale-integration" 
+  or api_name == "client-coupons-hbase" %}
+        image: dolphinnexus.br.wcorp.carrefour.com:8083/qa-{{ api_name }}-{{ version }}
+{% else %}
+        image: dolphinnexus.br.wcorp.carrefour.com:8083/qa-{{ api_name }}:{{ version }}
+{% endif %}
+        imagePullPolicy: Always
+        resources:
+          requests:
+            cpu: {{ r_cpu }}
+            memory: {{ r_memory }}
+          limits:
+            cpu: {{ l_cpu }}
+            memory: {{ l_memory }}
+        env:
+        - name: TZ
+          value: "America/Sao_Paulo"
+        volumeMounts:
+        - mountPath: /home/apijob/{{ api_name }}/conf/
+          name: file-conf
+        - mountPath: /etc/security/keytabs/apijob.service.keytab
+          name: file-keytab
+        - mountPath: /etc/hosts
+          name: file-hosts
+        - mountPath: /home/apijob/{{ api_name }}/logs
+          name: log-{{ api_name }}
+{% if api_name == "fiscal-xml-consult" %}
+        - mountPath: /home/apijob/fiscal-xml-consult/conf/core-site.xml
+          name: file-conf-core-site
+        - mountPath: /home/apijob/fiscal-xml-consult/conf/hbase-site.xml
+          name: file-conf-hbase-site
+        - mountPath: /home/apijob/fiscal-xml-consult/conf/hdfs-site.xml
+          name: file-conf-hdfs-site
+{% endif %}
+        ports:
+          - containerPort: {{ api_port }}
+      imagePullSecrets:
+      - name: qa-nexus
+      volumes:
+{% if api_name == "fiscal-xml-consult" %}
+      - hostPath:
+          path: /gfsdata01/kubernetes/volumes/dolphin/api/br/com/carrefour/dolphin/play/environment/qa/conf/core-site.xml
+        name: file-conf-core-site
+      - hostPath:
+          path: /gfsdata01/kubernetes/volumes/dolphin/api/br/com/carrefour/dolphin/play/environment/qa/conf/hbase-site.xml
+        name: file-conf-hbase-site
+      - hostPath:
+          path: /gfsdata01/kubernetes/volumes/dolphin/api/br/com/carrefour/dolphin/play/environment/qa/conf/hdfs-site.xml
+        name: file-conf-hdfs-site
+{% endif %}
+{% if api_name != "image-storage" %}
+      - hostPath:
+          path: /gfsdata01/kubernetes/volumes/dolphin/api/br/com/carrefour/dolphin/play/environment/qa/conf
+        name: file-conf
+{% endif %}
+{% if api_name == "image-storage" %}
+      - hostPath:
+          path: /gfsdata01/kubernetes/volumes/dolphin/api/br/com/carrefour/dolphin/play/environment/qa/services/image-storage
+        name: file-image-storage
+{% endif %}
+      - hostPath:
+          path: /gfsdata01/kubernetes/volumes/dolphin/api/br/com/carrefour/dolphin/play/keytabs/apijob.service.keytab
+        name: file-keytab
+      - hostPath:
+          path: /etc/hosts
+        name: file-hosts
+      - hostPath:
+          path: /gfsdata01/kubernetes/volumes/dolphin/api/br/com/carrefour/dolphin/play/environment/qa/promotional-ranking/logs
+        name: log-{{ api_name }}
