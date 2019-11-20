@@ -11,3 +11,6 @@
     with_items:
       - app_1.yml
       - app_2.yml
+      - app_3.yml
+      - app_4.yml
+      - app_5.yml
