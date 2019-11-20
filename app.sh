@@ -1,17 +1,15 @@
 #!/bin/bash
 
-export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin
-
 case $1 in
   --create)
     git pull -a
-    ansible-playbook apis_create.yml -e ansible_python_interpreter=/usr/bin/python
+    ansible-playbook app_create.yml
     ;;
   --apply)
-    ansible-playbook apis_apply.yml -e ansible_python_interpreter=/usr/bin/python
+    ansible-playbook app_apply.yml
     ;;
   --delete)
-    ansible-playbook apis_delete.yml -e ansible_python_interpreter=/usr/bin/python
+    ansible-playbook app_delete.yml
     ;;
     *)
     echo -e "\nUsing: [--create, --apply ,--delete]\n"

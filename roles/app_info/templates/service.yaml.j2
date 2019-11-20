@@ -10,9 +10,9 @@ spec:
   externalTrafficPolicy: Cluster
   ports:
   - nodePort: {{ nodeport }}
-    port: {{ api_port }}
+    port: {{ app_port }}
     protocol: TCP
-    targetPort: {{ api_port }}
+    targetPort: {{ app_port }}
   selector:
     app: {{ app_name }}
   sessionAffinity: None

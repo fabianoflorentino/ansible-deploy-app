@@ -1,10 +1,4 @@
 ---
-- name: "Check API's on Kubernetes"
-  shell: |
-    kubectl get all -n {{ item }}
-  register: check_apis
-  loop: "{{ app_name }}"
-
 - name: "Delete API's on Kubernetes"
   shell: |
     kubectl delete -f /tmp/{{ item }}/deployment/{{ item }}.yaml
@@ -13,5 +7,4 @@
     kubectl delete namespace {{ item }}
   loop: "{{ app_name }}"
   when: 
-    - (check_apis.stderr != "No resources found.")
     - (api_deploy == false)
