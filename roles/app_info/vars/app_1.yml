@@ -1,8 +1,8 @@
 ---
-api_name: "client-coupons-hbase"
-api_port: 8077
-nodeport: 30877
-version: 35
+app_name: "app-1"
+app_port: 80
+nodeport: 30808
+app_image: nginx
 r_cpu: "128m"
 r_memory: "64M"
 l_cpu: "1024m"

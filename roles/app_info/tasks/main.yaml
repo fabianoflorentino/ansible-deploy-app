@@ -1,0 +1,15 @@
+---
+- name: "Create Deployment File for API's - {{ app_name }}"
+  template:
+    src: deployment.yaml.j2
+    dest: "/tmp/{{ app_name }}/deployment/{{ app_name }}.yaml"
+
+- name: "Create Service Files for API's - {{ app_name }}"
+  template:
+    src: service.yaml.j2
+    dest: "/tmp/{{ app_name }}/service/{{ app_name }}.yaml"
+
+- name: "Create HPA Files for API's - {{ app_name }}"
+  template:
+    src: hpa.yaml.j2
+    dest: "/tmp/{{ app_name }}/hpa/{{ app_name }}.yaml"

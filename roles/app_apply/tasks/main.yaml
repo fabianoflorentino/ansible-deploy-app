@@ -1,0 +1,17 @@
+---
+- name: "Check API's on Kubernetes"
+  shell: |
+    kubectl get all -n {{ item }}
+  register: check_apis
+  loop: "{{ app_name }}"
+
+- name: "Deploy API's on Kubernetes"
+  shell: |
+    kubectl create namespace {{ item }}
+    kubectl apply -f /tmp/{{ item }}/deployment/{{ item }}.yaml
+    kubectl apply -f /tmp/{{ item }}/service/{{ item }}.yaml
+    kubectl apply -f /tmp/{{ item }}/hpa/{{ item }}.yaml
+  loop: "{{ app_name }}"
+  when: 
+    - (check_apis.stderr == "No resources found.")
+    - (api_deploy == true)

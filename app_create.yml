@@ -1,0 +1,13 @@
+---
+
+- name: "Deploy API's on Kubernetes"
+  hosts: localhost
+  roles:
+    - {role: common, tags: "common"}
+  tasks:
+  - include_role:
+      role: app_info
+      vars_from: "{{ item }}"
+    with_items:
+      - app_1.yml
+      - app_2.yml

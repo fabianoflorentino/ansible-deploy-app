@@ -1,11 +1,21 @@
 ---
-- name: "Directory to Write YAML Files"
+- name: "Directory to Write YAML Files - Deployment"
   file:
     state: directory
-    path: "{{ item }}"
-  loop:
-    - "/tmp/apis"
-    - "/tmp/apis/qa"
-    - "/tmp/apis/qa/deployment"
-    - "/tmp/apis/qa/service"
-    - "/tmp/apis/qa/hpa"
+    path: "/tmp/{{ item }}/deployment"
+    recurse: yes
+  loop: "{{ app_name }}"
+
+- name: "Directory to Write YAML Files - Service"
+  file:
+    state: directory
+    path: "/tmp/{{ item }}/service"
+    recurse: yes
+  loop: "{{ app_name }}"
+
+- name: "Directory to Write YAML Files - HPA"
+  file:
+    state: directory
+    path: "/tmp/{{ item }}/hpa"
+    recurse: yes
+  loop: "{{ app_name }}"
