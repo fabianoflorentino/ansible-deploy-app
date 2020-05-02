@@ -1,7 +1,7 @@
 ---
 
 - name: "Delete API's on Kubernetes"
-  hosts: localhost
+  hosts: master
   roles:
     - {role: app_delete, tags: "apis_delete"}
   

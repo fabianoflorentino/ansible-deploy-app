@@ -1,11 +1,14 @@
 ---
-apiVersion: apps/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ app_name }}
   namespace: {{ app_name }}
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: {{ app_name }}
   template:
     metadata:
       labels:
