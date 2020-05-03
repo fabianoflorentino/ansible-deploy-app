@@ -1,5 +1,5 @@
 ---
-- name: "Delete API's on Kubernetes"
+- name: "Delete APP's on Kubernetes"
   shell: |
     kubectl delete -f /tmp/{{ item }}/deployment/{{ item }}.yaml
     kubectl delete -f /tmp/{{ item }}/service/{{ item }}.yaml
@@ -7,4 +7,4 @@
     kubectl delete namespace {{ item }}
   loop: "{{ app_name }}"
   when: 
-    - (api_deploy == false)
+    - (app_deploy == true)

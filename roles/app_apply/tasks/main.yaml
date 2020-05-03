@@ -1,5 +1,5 @@
 ---
-- name: "Deploy API's on Kubernetes"
+- name: "Deploy APP's on Kubernetes"
   shell: |
     kubectl create namespace {{ item }}
     kubectl apply -f /tmp/{{ item }}/deployment/{{ item }}.yaml
@@ -7,4 +7,4 @@
     kubectl apply -f /tmp/{{ item }}/hpa/{{ item }}.yaml
   loop: "{{ app_name }}"
   when: 
-    - (api_deploy == true)
+    - (app_deploy == true)

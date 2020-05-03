@@ -1,9 +1,18 @@
 ---
 
-- name: "Deploy API's on Kubernetes"
+- name: "Deploy APP's on Kubernetes"
   hosts: master
+  pre_tasks:
+   - setup:
+      gather_subset:
+       - '!all'
+       - '!any'
+       - 'network'
+       - 'virtual'
+
   roles:
     - {role: common, tags: "common"}
+
   tasks:
   - include_role:
       role: app_info

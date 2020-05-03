@@ -1,7 +1,6 @@
 ---
 
-- name: "Delete API's on Kubernetes"
+- name: "Delete APP's on Kubernetes"
   hosts: master
   roles:
-    - {role: app_delete, tags: "apis_delete"}
-  
+    - {role: app_delete, tags: "app_delete"}

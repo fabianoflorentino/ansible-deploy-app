@@ -1,5 +1,5 @@
 ---
-api_deploy: false
+app_deploy: true
 app_name:
   - "app-1"
   - "app-2"
